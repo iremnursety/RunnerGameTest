@@ -1,4 +1,5 @@
 using Managers;
+using Opponent;
 using UnityEngine;
 
 namespace Obstacle.StaticObstacle
@@ -9,8 +10,10 @@ namespace Obstacle.StaticObstacle
         {
             if (other.CompareTag("Player"))
                 PlayerTurnBack();
-            else if (other.CompareTag("Opponent"))
-                OpponentTurnBack();
+            if (other.CompareTag("Opponent"))
+                other.GetComponent<OpponentController>().BackToStart();
+                
+            
         }
 
         private void PlayerTurnBack()
@@ -18,11 +21,6 @@ namespace Obstacle.StaticObstacle
             RunManager.Instance.HitObstacle();
             RunManager.Instance.IsRunStart = false;
             CountManager.Instance.HitObstacle();
-        }
-
-        private void OpponentTurnBack()
-        {
-            //Debug.Log("OpponentTurnBack");
         }
     }
 }

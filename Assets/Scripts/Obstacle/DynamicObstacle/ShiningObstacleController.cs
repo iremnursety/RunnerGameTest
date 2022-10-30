@@ -1,3 +1,4 @@
+using Opponent;
 using UnityEngine;
 
 namespace Obstacle.DynamicObstacle
@@ -64,6 +65,8 @@ namespace Obstacle.DynamicObstacle
         {
             if (other.gameObject.CompareTag("Player"))
                 SwitchColor();
+            if (other.gameObject.CompareTag("Opponent"))
+                other.GetComponent<OpponentController>().BackToStart();
         }
 
     }
