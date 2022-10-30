@@ -29,7 +29,7 @@ namespace Managers
         public void GameOver()
         {
             RunManager.Instance.SwerveInput = false;
-            LeaderboardManager.Instance.FinishGame();
+            LeaderboardManager.Instance.FinalizeGame();
             RunManager.Instance.StopPlayer();
             CountManager.Instance.TimerStart = false;
             CanvasManager.Instance.StartTouch = false;

@@ -6,6 +6,7 @@ namespace Managers
 {
     public class LeaderboardManager : MonoBehaviour
     {
+        //TODO:Turn Leaderboard to realtime.
         public static LeaderboardManager Instance { get; private set; }
         [SerializeField] private List<GameObject> rankedList = new List<GameObject>(11);
         [SerializeField] private List<TextMeshProUGUI> textMPs = new List<TextMeshProUGUI>(11);
@@ -19,7 +20,7 @@ namespace Managers
             
             textMPs.Capacity = 20;
         }
-
+        
         public void Leaderboard(GameObject player)
         {
             rankedList.Add(player);
@@ -32,7 +33,7 @@ namespace Managers
             textMPs[tempIndex].text = (tempIndex+1)+". "+rankedList[tempIndex].name;
         }
 
-        public void FinishGame()
+        public void FinalizeGame()
         {
             CanvasManager.Instance.FinishLine();
             if (rankedList.Count > 0)

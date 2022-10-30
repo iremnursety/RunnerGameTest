@@ -11,7 +11,7 @@ namespace Managers
         [SerializeField] private SwerveInputController swerveInput;
         public static RunManager Instance { get; private set; }
         public bool isRun;
-
+        
         private void Awake()
         {
             if (Instance == null)
@@ -27,18 +27,22 @@ namespace Managers
         {
             playerController.StartMove = true;
             CanvasManager.Instance.StartTouch = false;
+            AnimationManager.Instance.PlayerRun = true;
         }
 
         public void HitObstacle()
         {
-            playerController.StartMove = false;
+            IsRunStart = false;
+            AnimationManager.Instance.PlayerRun = false;
             CanvasManager.Instance.StartTouch = true;
             playerController.TurnBackFirstPos();
+            AnimationManager.Instance.PlayerRun = false;
         }
 
         public void StopPlayer()
         {
             playerController.StartMove = false;
+            AnimationManager.Instance.PlayerRun = false;
         }
 
         public bool IsRunStart
@@ -48,6 +52,7 @@ namespace Managers
             {
                 isRun = value;
                 swerveInput.Running = isRun;
+                playerController.StartMove = isRun;
             }
         }
 

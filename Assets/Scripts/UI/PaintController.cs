@@ -1,3 +1,4 @@
+using PaintIn3D;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -5,45 +6,52 @@ namespace UI
 {
     public class PaintController : MonoBehaviour
     {
-        [SerializeField] private Color red = Color.red;
-        [SerializeField] private Color blue = Color.blue;
-        [SerializeField] private Color yellow = Color.yellow;
-
-        [SerializeField] private Color newColor;
         [SerializeField] private float brushSize;
+        [SerializeField] private GameObject newColor,yellowTool, redTool, blueTool;
 
         [SerializeField] private Scrollbar brushScroll;
 
         private void Awake()
         {
-            newColor = yellow;
+            SwitchToYellow();
             brushSize = 1;
         }
 
         public void SwitchToRed()
         {
-            newColor = red;
+            newColor = redTool;
+            ChangeBrushSize();
+            yellowTool.SetActive(false);
+            redTool.SetActive(true);
+            blueTool.SetActive(false);
         }
 
         public void SwitchToBlue()
         {
-            newColor = blue;
+            newColor = blueTool;
+            ChangeBrushSize();
+            yellowTool.SetActive(false);
+            redTool.SetActive(false);
+            blueTool.SetActive(true);
         }
 
         public void SwitchToYellow()
         {
-            newColor = yellow;
+            newColor = yellowTool;
+            ChangeBrushSize();
+            yellowTool.SetActive(true);
+            redTool.SetActive(false);
+            blueTool.SetActive(false);
+            
         }
 
         public void ChangeBrushSize()
         {
-            brushSize += brushScroll.value;
+            brushSize = brushScroll.value;
+            var scale = newColor.GetComponent<P3dPaintSphere>().Scale;
+            
+            newColor.GetComponent<P3dPaintSphere>().Scale = new Vector3(brushSize*4,brushSize*4,brushSize*4);
         }
-
-        private Color NewColor
-        {
-            get => newColor;
-            set => newColor = value;
-        }
+        
     }
 }

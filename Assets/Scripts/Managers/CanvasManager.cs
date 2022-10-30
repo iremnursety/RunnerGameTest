@@ -20,7 +20,7 @@ namespace Managers
 
             StartTouch  = true;
             GameCounts = true;
-            LeaderBoard = false;
+            LeaderBoard = true;
             WhiteBoard = false;
         }
         
