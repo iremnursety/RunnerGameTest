@@ -10,6 +10,7 @@
       <Path>Library/PackageCache/com.unity.ide.visualstudio@2.0.16</Path>
       <Path>Library/PackageCache/com.unity.ide.vscode@1.2.5</Path>
       <Path>Library/PackageCache/com.unity.mathematics@1.1.0</Path>
+      <Path>Library/PackageCache/com.unity.recorder@2.5.7</Path>
       <Path>Library/PackageCache/com.unity.render-pipelines.core@10.10.0</Path>
       <Path>Library/PackageCache/com.unity.render-pipelines.universal@10.10.0</Path>
       <Path>Library/PackageCache/com.unity.searcher@4.3.2</Path>
@@ -26,6 +27,7 @@
       <Path>.idea</Path>
       <Path>Library</Path>
       <Path>Logs</Path>
+      <Path>Recordings</Path>
       <Path>Temp</Path>
       <Path>UserSettings</Path>
       <Path>obj</Path>
