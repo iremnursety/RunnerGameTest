@@ -6,7 +6,7 @@ namespace Obstacle.StaticObstacle
 {
     public class ObstacleController : MonoBehaviour
     {
-        private void OnTriggerEnter(Collider other)
+       private void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag("Player"))
                 PlayerTurnBack();
