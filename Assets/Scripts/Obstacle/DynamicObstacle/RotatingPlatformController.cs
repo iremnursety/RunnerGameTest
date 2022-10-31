@@ -5,10 +5,10 @@ namespace Obstacle.DynamicObstacle
 {
     public class RotatingPlatformController : MonoBehaviour
     {
-        private void OnTriggerEnter(Collider other)
+        private void OnCollisionEnter(Collision other)
         {
-            if (other.CompareTag("Opponent"))
-                other.GetComponent<OpponentController>().BackToStart();
+            if (other.transform.CompareTag("Opponent"))
+                other.transform.GetComponent<OpponentController>().BackToStart();
         }
     }
 }

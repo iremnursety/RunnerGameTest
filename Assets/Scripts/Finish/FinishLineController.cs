@@ -1,4 +1,5 @@
 using Managers;
+using Opponent;
 using UnityEngine;
 
 namespace Finish
@@ -21,21 +22,20 @@ namespace Finish
             if (other.gameObject.CompareTag("Player"))
             {
                 playerPassed = true;
-                var timer = 3f;
-                while (timer < 2)
-                {
-                    timer += Time.deltaTime;
-                    if (timer >= 2)
-                        break;
-                }
-                
+                RunManager.Instance.SwerveInput = false;
+                LeaderboardManager.Instance.Leaderboard(other.gameObject);
+            }
+
+            if (other.gameObject.CompareTag("Opponent"))
+            {
+                other.GetComponent<OpponentController>().SetAnimation = false;
                 LeaderboardManager.Instance.Leaderboard(other.gameObject);
             }
         }
 
         private void Update()
         {
-            if (playerPassed != true) return;
+            if (playerPassed)
                 Timer();
         }
 

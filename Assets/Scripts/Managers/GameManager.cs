@@ -28,12 +28,14 @@ namespace Managers
 
         public void GameOver()
         {
-            RunManager.Instance.SwerveInput = false;
-            LeaderboardManager.Instance.FinalizeGame();
-            RunManager.Instance.StopPlayer();
+            gameStarted = false;
+            
+            RunManager.Instance.IsRunStart = false;
+            AnimationManager.Instance.PlayerRun = false;
             CountManager.Instance.TimerStart = false;
             CanvasManager.Instance.StartTouch = false;
-            gameStarted = false;
+            LeaderboardManager.Instance.FinalizeGame();
+            
         }
     }
 }

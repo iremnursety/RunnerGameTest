@@ -22,6 +22,8 @@ namespace Player
             MoveHorizontal();
             if (startMove)
                 Move();
+            if (rigBdy.velocity.y >= 0)
+                ExtraGravity();
         }
 
         public bool StartMove
@@ -53,6 +55,14 @@ namespace Player
         {
             get => horizontalX;
             set => horizontalX = value;
+        }
+        private void ExtraGravity()
+        {
+            // if (rigBdy.velocity.y <= 0)
+            //     rigBdy.AddForce(-transform.up*10);
+            
+            if (rigBdy.velocity.y < 0)
+                rigBdy.velocity += new Vector3(0,-10,0);
         }
     }
 }

@@ -1,3 +1,4 @@
+using Opponent;
 using UnityEngine;
 
 namespace Obstacle.DynamicObstacle
@@ -48,11 +49,13 @@ namespace Obstacle.DynamicObstacle
 
         private void OnCollisionEnter(Collision other)
         {
-            if (other.gameObject.CompareTag("Player")||other.gameObject.CompareTag("Opponent"))
+            if (other.gameObject.CompareTag("Player"))
             {
-                var contact =other.GetContact(0).point;
+                var contact=other.GetContact(0).point;
                 other.gameObject.GetComponent<Rigidbody>().AddForce(-contact.x * rigidDonut.mass, 0f, 0f);
             }
+            if(other.gameObject.CompareTag("Opponent"))
+                other.gameObject.GetComponent<OpponentController>().BackToStart();
         }
     }
 }

@@ -10,7 +10,7 @@ namespace Managers
 
         [SerializeField] private int hitCount;
         [SerializeField] private float gameTimer;
-        [SerializeField] private bool isGameStart;
+        [SerializeField] private bool firstStart;
         [SerializeField] private HitCountController hitTextCont;
         [SerializeField] private TextMeshProUGUI textMeshTimer;
 
@@ -35,25 +35,23 @@ namespace Managers
 
         private void Update()
         {
-            if (isGameStart)
+            if (firstStart)
                 Timer();
         }
 
         public bool TimerStart
         {
-            get => isGameStart;
-            set => isGameStart = value;
+            get => firstStart;
+            set => firstStart = value;
         }
 
         private void Timer()
         {
-            if (gameTimer > 0)
-            {
-                gameTimer -= Time.deltaTime;
-                textMeshTimer.text = Mathf.RoundToInt(gameTimer) + " Sec!";
-                if(gameTimer<=0)
-                    GameManager.Instance.GameOver();
-            }
+            if (!(gameTimer > 0)) return;
+            gameTimer -= Time.deltaTime;
+            textMeshTimer.text = Mathf.RoundToInt(gameTimer) + " Sec!";
+            if(gameTimer<=0)
+                GameManager.Instance.GameOver();
         }
 
     }

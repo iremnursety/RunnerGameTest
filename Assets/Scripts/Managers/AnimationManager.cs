@@ -7,9 +7,9 @@ namespace Managers
       public static AnimationManager Instance { get; private  set; }
 
       [SerializeField] private Animator playerAnim;
-      [SerializeField] private bool player, opponent;
+      [SerializeField] private bool player;
       private static readonly int İsPlayerRunning = Animator.StringToHash("isPlayerRunning");
-      private static readonly int İsOpponentRunning = Animator.StringToHash("isOpponentRunning");
+      
 
       private void Awake()
       {
@@ -26,16 +26,6 @@ namespace Managers
          {
             player = value;
             playerAnim.SetBool(İsPlayerRunning, player);
-         }
-      }
-
-      public bool OpponentRun
-      {
-         get => opponent;
-         set
-         {
-            opponent = value;
-            playerAnim.SetBool(İsOpponentRunning, opponent);
          }
       }
    }

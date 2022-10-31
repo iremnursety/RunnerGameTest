@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Opponent;
 using TMPro;
 using UnityEngine;
 
@@ -23,6 +24,7 @@ namespace Managers
         
         public void Leaderboard(GameObject player)
         {
+            if (rankedList.Contains(player)) return;
             rankedList.Add(player);
             var tempIndex = rankedList.Count - 1;
             if (player.CompareTag("Player"))
@@ -30,6 +32,8 @@ namespace Managers
                 textMPs[tempIndex].color = Color.yellow;
                 textMPs[tempIndex].fontStyle = FontStyles.Bold;
             }
+            if(player.CompareTag("Opponent"))
+                player.GetComponent<OpponentController>().isRunning = false;
             textMPs[tempIndex].text = (tempIndex+1)+". "+rankedList[tempIndex].name;
         }
 

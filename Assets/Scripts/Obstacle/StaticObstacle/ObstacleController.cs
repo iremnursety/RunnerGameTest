@@ -12,15 +12,11 @@ namespace Obstacle.StaticObstacle
                 PlayerTurnBack();
             if (other.CompareTag("Opponent"))
                 other.GetComponent<OpponentController>().BackToStart();
-                
-            
         }
 
-        private void PlayerTurnBack()
+        private static void PlayerTurnBack()
         {
             RunManager.Instance.HitObstacle();
-            RunManager.Instance.IsRunStart = false;
-            CountManager.Instance.HitObstacle();
         }
     }
 }

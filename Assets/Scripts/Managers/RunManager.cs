@@ -28,23 +28,18 @@ namespace Managers
             playerController.StartMove = true;
             CanvasManager.Instance.StartTouch = false;
             AnimationManager.Instance.PlayerRun = true;
-        }
+           }
 
         public void HitObstacle()
         {
             IsRunStart = false;
-            AnimationManager.Instance.PlayerRun = false;
-            CanvasManager.Instance.StartTouch = true;
             playerController.TurnBackFirstPos();
             AnimationManager.Instance.PlayerRun = false;
+            CanvasManager.Instance.StartTouch = true;
+            CountManager.Instance.HitObstacle();
+            
         }
-
-        public void StopPlayer()
-        {
-            playerController.StartMove = false;
-            AnimationManager.Instance.PlayerRun = false;
-        }
-
+    
         public bool IsRunStart
         {
             get => isRun;
