@@ -4,7 +4,7 @@ namespace Player
 {
     public class SwerveInputController : MonoBehaviour
     {
-        [SerializeField] private float lastPosX,movePos;
+        public float lastPosX,movePos;
         [SerializeField] private bool isRunStart;
         [SerializeField] private PlayerController playerCont;
 

@@ -6,8 +6,8 @@ namespace Player
     {
         [SerializeField] private Rigidbody rigBdy;
         [SerializeField] private Vector3 firstPos;
-        [SerializeField] private float speed,swerveSpeed,horizontalX;
-        
+        [SerializeField] private float speed, swerveSpeed, horizontalX;
+
         public bool startMove;
 
         private void Awake()
@@ -15,54 +15,55 @@ namespace Player
             rigBdy = gameObject.GetComponent<Rigidbody>();
             firstPos = transform.position;
             swerveSpeed = 0.5f;
+        }
+
+        private void FixedUpdate()
+        {
+            if (startMove)
+            {
+                Move();
+                MoveHorizontal();
             }
 
-        private void Update()
-        {
-            MoveHorizontal();
-            if (startMove)
-                Move();
             if (rigBdy.velocity.y >= 0)
                 ExtraGravity();
         }
 
-        public bool StartMove
+        public bool StartMove //Is player touch on Tap to Run.
         {
             get => startMove;
             set => startMove = value;
         }
 
-        public void TurnBackFirstPos()
+        public void BackToStartPlayer() //After hit obstacles.
         {
-            rigBdy.velocity=Vector3.zero;
+            rigBdy.velocity = Vector3.zero;
             rigBdy.position = firstPos;
         }
 
-        private void Move()
+        private void Move() //Move Player.
         {
-            var move = Time.deltaTime * speed * transform.forward;
+            var move = Time.fixedDeltaTime * speed * transform.forward;
             rigBdy.MovePosition(rigBdy.position + move);
         }
 
-        private void MoveHorizontal()
+        private void MoveHorizontal() //Swerve
         {
             var swerveX = Time.deltaTime * swerveSpeed * horizontalX;
             var swervePos = new Vector3(swerveX, 0f, 0f);
             rigBdy.MovePosition(rigBdy.position + swervePos);
         }
 
-        public float Horizontal
+        public float Horizontal //Swerve value on X-axis.
         {
             get => horizontalX;
             set => horizontalX = value;
         }
-        private void ExtraGravity()
+
+        private void ExtraGravity() //Extra gravity. TODO:Check it!
         {
-            // if (rigBdy.velocity.y <= 0)
-            //     rigBdy.AddForce(-transform.up*10);
-            
-            if (rigBdy.velocity.y < 0)
-                rigBdy.velocity += new Vector3(0,-10,0);
+            if (rigBdy.velocity.y <= 0)
+                rigBdy.AddForce(-transform.up * 10);
         }
     }
 }

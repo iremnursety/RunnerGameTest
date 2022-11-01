@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Opponent;
+using Player;
 using TMPro;
 using UnityEngine;
 
@@ -9,54 +9,79 @@ namespace Managers
     {
         //TODO:Turn Leaderboard to realtime.
         public static LeaderboardManager Instance { get; private set; }
-        [SerializeField] private List<GameObject> rankedList = new List<GameObject>(11);
-        [SerializeField] private List<TextMeshProUGUI> textMPs = new List<TextMeshProUGUI>(11);
-        
+        [SerializeField] private List<TextMeshProUGUI> textMPs = new List<TextMeshProUGUI>();
+        public List<GameObject> rankedList;
+        public List<RankController> tempRank = new List<RankController>();
+        [SerializeField] private int playerRank;
+        public int indexer;
+
+
         private void Awake()
         {
             if (Instance == null)
                 Instance = this;
             else
                 Destroy(gameObject);
-            
-            textMPs.Capacity = 20;
-        }
-        
-        public void Leaderboard(GameObject player)
-        {
-            if (rankedList.Contains(player)) return;
-            rankedList.Add(player);
-            var tempIndex = rankedList.Count - 1;
-            if (player.CompareTag("Player"))
-            {
-                textMPs[tempIndex].color = Color.yellow;
-                textMPs[tempIndex].fontStyle = FontStyles.Bold;
-            }
-            if(player.CompareTag("Opponent"))
-                player.GetComponent<OpponentController>().isRunning = false;
-            textMPs[tempIndex].text = (tempIndex+1)+". "+rankedList[tempIndex].name;
+
+            indexer = 0;
         }
 
-        public void FinalizeGame()
+        public void RankList(List<RankController> rankCont)
         {
-            CanvasManager.Instance.FinishLine();
-            if (rankedList.Count > 0)
+            tempRank = rankCont;
+            ChangeList();
+        }
+
+        private void ChangeList()
+        {
+            for (var i = 0 + rankedList.Count; i < tempRank.Count; i++)
             {
-                for (var i = 0; i < rankedList.Count; i++)
+                if (rankedList.Contains(textMPs[i].gameObject)) continue;
+                textMPs[i].color = Color.white;
+                textMPs[i].fontStyle = FontStyles.Normal;
+                if (tempRank[i].transform.CompareTag("Player"))
                 {
-                    if (rankedList[i].CompareTag("Player"))
-                    {
-                        textMPs[i].color = Color.yellow;
-                        textMPs[i].fontStyle = FontStyles.Bold;
-                        textMPs[i].text = (i + 1)+". "+rankedList[i].name;
-                    }
-                    else if(rankedList[i].CompareTag("Opponent"))
-                        textMPs[i].text = (i + 1) + ". " + rankedList[i].name;
+                    textMPs[i].color = Color.yellow;
+                    textMPs[i].fontStyle = FontStyles.Bold;
+                }
+
+                textMPs[i].text = (i + 1) + ". " + tempRank[i].name;
+            }
+        }
+
+        public void FinishLinePassed(GameObject obj)
+        {
+            if (rankedList.Contains(obj)) return;
+            rankedList.Add(obj);
+        }
+
+        public void FinalizeGame() //Finalizing Game(Time out / Passing Finish Line)
+        {
+            for (var i = 0; i < tempRank.Count; i++)
+            {
+                if (tempRank[i].CompareTag("Player"))
+                {
+                    playerRank = i + 1;
                 }
             }
         }
 
-        public void TextRegister(int index,TextMeshProUGUI textMesh)
+        public void IsInRange()
+        {
+            if (playerRank <= 3)
+            {
+                CanvasManager.Instance.WhiteBoard = true;
+                GameManager.Instance.GameOver();
+                CameraManager.Instance.FocusBoard();
+            }
+            else
+            {
+                CanvasManager.Instance.NoWhiteBoard = true;
+                GameManager.Instance.GameOver();
+            }
+        }
+
+        public void TextRegister(int index, TextMeshProUGUI textMesh)
         {
             textMPs[index] = textMesh;
         }

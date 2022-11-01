@@ -10,7 +10,7 @@ namespace Opponent
         [SerializeField] private Rigidbody rigidOpponent;
         [SerializeField] private float speed, dodgeSpeed, reverse;
         public Animator opponentAnim;
-        public bool isRunning, animBool;
+        public bool isRunning, animBool,finishPassed;
         private static readonly int OpponentRunning = Animator.StringToHash("opponentRunning");
 
         private void Awake()
@@ -36,38 +36,30 @@ namespace Opponent
                 if (opponentAnim.GetBool(OpponentRunning) != true)
                     opponentAnim.SetBool(OpponentRunning, true);
             }
+
             ExtraGravity();
         }
 
-        public bool SetAnimation
+        public bool SetAnimation //Opponent Animations.
         {
             get => animBool;
             set => opponentAnim.SetBool(OpponentRunning, value);
         }
 
-        public void BackToStart()
+        public void BackToStart() //After hit obstacles.
         {
             rigidOpponent.velocity = Vector3.zero;
             rigidOpponent.transform.position = firstPos;
         }
 
-        private void Move()
+        private void Move() //Move Opponent.
         {
-            var move = Time.deltaTime * speed * transform.forward;
+            var move = Time.fixedDeltaTime * speed * transform.forward;
             rigidOpponent.MovePosition(rigidOpponent.position + move);
         }
 
-        public void Dodge(Vector3 direction)
+        public void Dodge(Vector3 direction) //Opponent dodge obstacles.
         {
-            //var direction = new Vector3(-obstacle.x * dodgeSpeed * Time.fixedDeltaTime, 0, 0);
-            //var direction2 = new Vector3(-obstacle.x*dodgeSpeed*Time.unscaledDeltaTime, 0, 0);
-            //rigidOpponent.MovePosition(direction2);
-
-            // if(direction.x >0)
-            //     rigidOpponent.AddForce(-obstacle.x*dodgeSpeed,0,0);
-            // else
-            //     rigidOpponent.AddForce(obstacle.x*dodgeSpeed,0,0);
-
             if (direction.x < 0)
                 reverse = 1;
             else
@@ -77,7 +69,7 @@ namespace Opponent
             rigidOpponent.velocity = Vector3.zero;
         }
 
-        private void ExtraGravity()
+        private void ExtraGravity() //Extra gravity.
         {
             if (rigidOpponent.velocity.y < 0)
                 rigidOpponent.AddForce(-transform.up);

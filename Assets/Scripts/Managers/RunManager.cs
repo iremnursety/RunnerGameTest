@@ -23,25 +23,30 @@ namespace Managers
             IsRunStart = false;
         }
 
-        public void StartGame()
+        public void StartGame() //For the Start game or after hit obstacle for start running.
         {
+           
             playerController.StartMove = true;
             CanvasManager.Instance.StartTouch = false;
             AnimationManager.Instance.PlayerRun = true;
-           }
+            IsRunStart = true;
+            GameManager.Instance.FirstStart();
+        }
 
-        public void HitObstacle()
+        public void HitObstacle() //Reset Player Position to First Position and then Show Tap To Run.
         {
+            playerController.BackToStartPlayer();
+            CountManager.Instance.HitObstacle();
+            if (IsRunStart == false) return;
             IsRunStart = false;
-            playerController.TurnBackFirstPos();
             AnimationManager.Instance.PlayerRun = false;
             CanvasManager.Instance.StartTouch = true;
-            CountManager.Instance.HitObstacle();
-            
+
         }
     
-        public bool IsRunStart
+        public bool IsRunStart //For Manage Run and Swerve.
         {
+            
             get => isRun;
             set
             {
@@ -51,10 +56,15 @@ namespace Managers
             }
         }
 
-        public bool SwerveInput
+        public bool SwerveInput // Manage Player Swerve.
         {
             get => swerveInput;
-            set => swerveInput.enabled = value;
+            set
+            {
+                swerveInput.enabled = value;
+                swerveInput.lastPosX = 0;
+                swerveInput.movePos = 0;
+            }
         }
     }
 }

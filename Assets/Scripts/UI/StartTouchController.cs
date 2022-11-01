@@ -6,9 +6,9 @@ namespace UI
 {
     public class StartTouchController : MonoBehaviour, IPointerClickHandler
     {
-        public void OnPointerClick(PointerEventData eventData)
+        public void OnPointerClick(PointerEventData eventData) //For the Start game or after hit obstacle for start running.
         {
-            //For the Start game or after hit obstacle for start running.
+           
             RunManager.Instance.StartGame();
             RunManager.Instance.IsRunStart = true;
             GameManager.Instance.FirstStart();
